@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import AppContext from '../../AppContext';
+import Page from '../../components/Page';
 
-const Home = () => {
+
+const Pokemons = () => {
+    const [state, dispatch] = useContext(AppContext);
+
+    console.log(state);
+
     return (
-        <div>
-            Home
-        </div>
+        <Page title='Pokémon List'>
+            <ul>
+                {state.pokemons.map((pokemon, index) => (
+                    <li key={index}>{pokemon.name}</li>
+                ))}
+            </ul>
+        </Page>
     )
 }
 
-export default Home;
+export default Pokemons;
