@@ -1,24 +1,31 @@
-import React, { useReducer, useEffect }from 'react';
-import AppContext, {reducer, initialState} from './AppContext';
+import React, { useCallback, useReducer, useEffect } from 'react';
+import AppContext, { reducer, initialState } from './AppContext';
+import axios from "./utils/api";
 
-const AppContextProvider = ({children}) => {
-    
-    const [state, dispatch] = useReducer(reducer, initialState); 
+const AppContextProvider = ({ children }) => {
 
-    const fetchPokemons = async () => {
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=9');
-        const data = await response.json();
-        console.log(data);
-        dispatch({type: 'SET_POKEMON', payload: data.results});
-    }
+    const [state, dispatch] = useReducer(reducer, initialState);
 
-    useEffect(() => {
-        fetchPokemons();
+    const fetchData = useCallback(async () => {
+
+       const [responsePokemon, responseMe] = await Promise.all(
+            [
+                axios.get('/pokedex?page=1&limit=9'),
+                axios.post('/me'),
+            ]
+        )
+
+dispatch({ type: 'SET_POKEMON', payload: responsePokemon.data.data });
+dispatch({ type: 'SET_WISHLIST', payload: responseMe.data.user.whishlist });
     }, []);
 
-    return <AppContext.Provider value={[state, dispatch]}>
-        {children}
-    </AppContext.Provider>
+useEffect(() => {
+    fetchData();
+}, [fetchData()]);
+
+return <AppContext.Provider value={[state, dispatch]}>
+    {children}
+</AppContext.Provider>
 }
 
 export default AppContextProvider;

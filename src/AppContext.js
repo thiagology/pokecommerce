@@ -17,6 +17,12 @@ const reducer = (state, action) => {
                 pokemons: action.payload
             }
         }
+        case 'SET_WISHLIST':{
+            return {
+                ...state,
+                wishlist: action.payload,
+              };
+        }
         default: {
             return state;
         }
