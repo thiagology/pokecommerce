@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
-const publicPaths = ["/", "/api/auth"];
+const publicPaths = ['/', '/api/auth'];
 
 const authMiddleware = (req, res, next) => {
   const {
@@ -9,16 +9,16 @@ const authMiddleware = (req, res, next) => {
     method,
   } = req;
 
-  if (publicPaths.includes(url) || (url === "/api/user" && method === "POST")) {
+  if (publicPaths.includes(url) || (url === '/api/user' && method === 'POST')) {
     return next();
   }
 
   try {
     if (!authorization) {
-      throw new Error("Authorization not exists");
+      throw new Error('Authorization not exists');
     }
 
-    const [, token] = authorization.split(" ");
+    const [, token] = authorization.split(' ');
     const user = jwt.verify(token, process.env.JWT_SECRET);
 
     req.headers.loggedUser = user;

@@ -5,17 +5,15 @@ import Cart from './pages/Cart';
 import Home from './pages/Home';
 import Wishlist from './pages/Wishlist';
 
-const Routes = () => {
-    return (
-        <BrowserRouter>
-            <NavigationBar/>
-            <Switch>
-                <Route path='/' exact component={Home} />
-                <Route path='/wishlist' exact component={Wishlist} />
-                <Route path='/cart' exact component={Cart} />
-            </Switch>
-        </BrowserRouter>
-    )
-}
+const Routes = () => (
+  <BrowserRouter>
+    <NavigationBar />
+    <Switch>
+      <Route path="/" exact component={Home} />
+      <Route path="/wishlist" exact component={Wishlist} />
+      <Route path="/cart" exact component={Cart} />
+    </Switch>
+  </BrowserRouter>
+);
 
 export default Routes;

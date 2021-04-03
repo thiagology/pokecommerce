@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const PokedexSchema = new mongoose.Schema(
   {
@@ -17,9 +17,9 @@ const PokedexSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-const PokedexModel = mongoose.model("pokedex", PokedexSchema);
+const PokedexModel = mongoose.model('pokedex', PokedexSchema);
 
 module.exports = { PokedexSchema, PokedexModel };

@@ -1,7 +1,7 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-const UserModel = require("../models/user.model")
+const UserModel = require('../models/user.model');
 
 const saltRounds = 10;
 
@@ -20,7 +20,7 @@ class User {
   }
 
   async store(req, res) {
-    const body = req.body;
+    const { body } = req;
 
     if (body.password) {
       body.password = await hashPassword(body.password);
@@ -49,12 +49,12 @@ class User {
       const user = await UserModel.findById(id);
 
       if (!user) {
-        return res.send({ message: "User not exist" });
+        return res.send({ message: 'User not exist' });
       }
 
       await user.remove();
 
-      res.send({ message: "User removed" });
+      res.send({ message: 'User removed' });
     } catch (error) {
       res.status(400).send({ message: error.message });
     }
@@ -82,13 +82,13 @@ class User {
       const user = await UserModel.findOne({ email }).lean();
 
       if (!user) {
-        throw new Error("User not exists");
+        throw new Error('User not exists');
       }
 
       const isValid = await bcrypt.compare(password, user.password);
 
       if (!isValid) {
-        throw new Error("Password invalid");
+        throw new Error('Password invalid');
       }
 
       const token = jwt.sign(user, process.env.JWT_SECRET);

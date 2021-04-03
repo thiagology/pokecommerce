@@ -36,18 +36,18 @@ export const gqlQueryPokemon = `
 
 export const fetchPokemon = async (pokemonName, query = gqlQuery) => {
   const response = await fetch(
-    "https://graphql-pokeapi.vercel.app/api/graphql",
+    'https://graphql-pokeapi.vercel.app/api/graphql',
     {
-      credentials: "omit",
-      headers: { "Content-Type": "application/json" },
+      credentials: 'omit',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         query,
         variables: {
           name: pokemonName,
         },
       }),
-      method: "POST",
-    }
+      method: 'POST',
+    },
   );
 
   const data = await response.json();

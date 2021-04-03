@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import "@clayui/css/lib/css/atlas.css";
+import '@clayui/css/lib/css/atlas.css';
 import { ClayIconSpriteContext } from '@clayui/icon';
 import spritemap from './icons.svg';
 
@@ -12,7 +12,7 @@ ReactDOM.render(
       <App />
     </ClayIconSpriteContext.Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 reportWebVitals();

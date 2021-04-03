@@ -1,5 +1,5 @@
-import React from "react";
-import ClayLayout from "@clayui/layout";
+import React from 'react';
+import ClayLayout from '@clayui/layout';
 
 export default function Page({ title, children }) {
   return (

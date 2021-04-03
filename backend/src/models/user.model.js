@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { PokedexSchema } = require("./pokedex.model");
+const mongoose = require('mongoose');
+const { PokedexSchema } = require('./pokedex.model');
 
 const UserSchema = new mongoose.Schema(
   {
@@ -12,9 +12,9 @@ const UserSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-const UserModel = mongoose.model("user", UserSchema);
+const UserModel = mongoose.model('user', UserSchema);
 
 module.exports = UserModel;
