@@ -1,9 +1,26 @@
 import React from 'react';
 import ClayCard from '@clayui/card';
+import { ClayButtonWithIcon } from '@clayui/button';
+import { useHistory } from "react-router-dom";
+import PokemonTypes from "./PokemonTypes";
 
-export default function PokemonCard({ name, image_url }) {
+export default function PokemonCard({
+  onClickFavorite,
+  types = [],
+  favoriteSymbol,
+  name,
+  image_url, 
+}) {
+  const history = useHistory();
+
   return (
-    <ClayCard>
+    <ClayCard title={name} className="pokemon-card">
+      <ClayButtonWithIcon
+        onClick={onClickFavorite}
+        className="ml-2 mt-2 favorite-pokemon"
+        symbol={favoriteSymbol}
+        displayType="secondary"
+      />
       <center>
         <img
           draggable={false}
@@ -15,9 +32,17 @@ export default function PokemonCard({ name, image_url }) {
       </center>
       <ClayCard.Body>
         <ClayCard.Row>
-          <ClayCard.Description displayType="title">
-            {name.toUpperCase()}
+          <ClayCard.Description title={`Description: ${name}`} displayType="title">
+            <span
+              className="pokemon-card__name"
+              onClick={() => history.push(`/pokemon/${name}`)}
+            >
+              {name.toUpperCase()}
+            </span>
           </ClayCard.Description>
+        </ClayCard.Row>
+        <ClayCard.Row>
+          <PokemonTypes types={types} />
         </ClayCard.Row>
       </ClayCard.Body>
     </ClayCard>

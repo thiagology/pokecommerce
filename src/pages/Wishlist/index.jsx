@@ -1,10 +1,17 @@
-import React from 'react';
-import Page from '../../components/Page';
+import React, { useContext } from "react";
 
-export default function Wishlist() {
+import Page from "../../components/Page";
+import PokemonList from "../../components/Pokemon/PokemonList";
+import AppContext from "../../AppContext";
+
+const WishList = () => {
+  const [{ wishlist }] = useContext(AppContext);
+
   return (
     <Page title="Wishlist">
-      Wishlist
+      <PokemonList pokemons={wishlist} />
     </Page>
   );
-}
+};
+
+export default WishList;

@@ -7,6 +7,9 @@ const initialState = {
   wishlist: [],
   cart: [],
   loggedUser: null,
+  me: {
+    purchasedPokemon: [],
+  },
 };
 
 const reducer = (state, action) => {

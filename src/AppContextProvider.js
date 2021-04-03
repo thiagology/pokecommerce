@@ -8,18 +8,18 @@ const AppContextProvider = ({ children }) => {
   const fetchData = useCallback(async () => {
     const [responsePokemon, responseMe] = await Promise.all(
       [
-        axios.get('/pokedex?page=1&limit=9'),
-        axios.post('/me'),
+        axios.get('/pokedex'),
+        //axios.post('/me'),
       ],
     );
-
+      console.log(responsePokemon.data.data);
     dispatch({ type: 'SET_POKEMON', payload: responsePokemon.data.data });
-    dispatch({ type: 'SET_WISHLIST', payload: responseMe.data.user.whishlist });
+    //dispatch({ type: 'SET_WISHLIST', payload: responseMe.data.user.whishlist });
   }, []);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData()]);
+  }, [fetchData]);
 
   return (
     <AppContext.Provider value={[state, dispatch]}>
