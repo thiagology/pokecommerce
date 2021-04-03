@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { parseJwt, tokenKey } from "./utils/util";
 
 const AppContext = createContext();
 
@@ -6,10 +7,10 @@ const initialState = {
   pokemons: [],
   wishlist: [],
   cart: [],
-  loggedUser: null,
   me: {
     purchasedPokemon: [],
   },
+  loggedUser: parseJwt(localStorage.getItem(tokenKey)),
 };
 
 const reducer = (state, action) => {
@@ -24,6 +25,19 @@ const reducer = (state, action) => {
       return {
         ...state,
         wishlist: action.payload,
+      };
+    }
+    case "SET_LOGGED_USER": {
+      return {
+        ...state,
+        loggedUser: action.payload,
+      };
+    }
+
+    case "SET_ME": {
+      return {
+        ...state,
+        me: action.payload,
       };
     }
     default: {
