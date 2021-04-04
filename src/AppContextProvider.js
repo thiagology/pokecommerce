@@ -1,16 +1,22 @@
 import React, { useReducer, useEffect } from 'react';
 import AppContext, { reducer, initialState } from './AppContext';
 import axios from './utils/api';
+import { useDebounce } from "./hooks/useDebounce";
 
 const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { loggedUser } = state;
+  const { loggedUser, pagination } = state;
+  const { search, limit, currentPage} = pagination;
+
+  const debouncedValue = useDebounce(search, 200);
 
   const fetchPokemons = async () => {
     const responsePokemon = await axios.get('/pokedex');
+    
     console.log(responsePokemon.data.data);
 
     dispatch({ type: "SET_POKEMON", payload: responsePokemon.data.data });
+    dispatch({ type: "SET_PAGINATION", payload: { search, ...pagination} });
   };
 
   const fetchMe = async () => {

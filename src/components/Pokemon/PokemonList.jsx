@@ -38,7 +38,7 @@ export default function PokemonList({ pokemons }) {
         })
       ) : (
         <span className="empty-state">
-          You don't have any purchased pokemon
+         This Pokémon list is empty.
         </span>
       )}
     </ClayLayout.Row>

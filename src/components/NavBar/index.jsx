@@ -7,19 +7,23 @@ import { useHistory, useLocation } from "react-router";
 import ClayIcon from "@clayui/icon";
 import AppContext from "../../AppContext";
 import { tokenKey } from "../../utils/util";
+import swal from '@sweetalert/with-react';
 
 const routes = [
   {
     name: "Pokemons",
     path: "/",
+    private: false,
   },
   {
     name: "Wishlist",
     path: "/wishlist",
+    private: true,
   },
   {
     name: "Purchased Pokemon",
     path: "/cart",
+    private: true,
   },
 ];
 
@@ -30,13 +34,30 @@ const NavigationBar = () => {
   const [active, setActive] = useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem(tokenKey);
+    swal({
+      title: "Are you sure you want to log out?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
 
-    setActive(false);
+          localStorage.removeItem(tokenKey);
 
-    dispatch({ type: "SET_LOGGED_USER", payload: null });
+          setActive(false);
+    
+          dispatch({ type: "SET_LOGGED_USER", payload: null });
+    
+          history.push("/auth");
 
-    history.push("/auth");
+          swal("Logged out with success!", {
+            icon: "success",
+          });
+        } else {
+          swal({text: "Log out canceled."});
+        }
+      });
   };
 
   return (
@@ -58,15 +79,12 @@ const NavigationBar = () => {
           </ClayNavigationBar.Item>
         ))}
       </>
-      
-      <ClayNavigationBar.Item>
-        <ClayLink className="nav-link" displayType="unstyled">
-          Pokedolar ${me.pokeDolar}
-        </ClayLink>
-      </ClayNavigationBar.Item>
 
       {loggedUser ? (
         <ClayNavigationBar.Item>
+          <ClayLink className="nav-link" displayType="unstyled" >
+            Pokedolars ${me.pokeDolar}
+          </ClayLink>
           <ClayDropDown
             trigger={
               <div>
@@ -78,7 +96,7 @@ const NavigationBar = () => {
             active={active}
             onActiveChange={setActive}
           >
-            <ClayDropDown.Help>{`Welcome: ${loggedUser.name}`}</ClayDropDown.Help>
+            <ClayDropDown.Help>{`Welcome Trainer ${loggedUser.name}`}</ClayDropDown.Help>
             <ClayDropDown.ItemList>
               <ClayDropDown.Item onClick={handleLogout}>
                 Logout

@@ -3,6 +3,8 @@ import { parseJwt, tokenKey } from "./utils/util";
 
 const AppContext = createContext();
 
+const searchParams = new URLSearchParams(window.location.search);
+
 const initialState = {
   pokemons: [],
   wishlist: [],
@@ -11,6 +13,13 @@ const initialState = {
     purchasedPokemon: [],
   },
   loggedUser: parseJwt(localStorage.getItem(tokenKey)),
+  pagination: {
+    currentPage: searchParams.get("page") ?? 1,
+    search: "",
+    limit: 9,
+    total: 0,
+    totalPages: 0,
+  },
 };
 
 const reducer = (state, action) => {
@@ -35,6 +44,12 @@ const reducer = (state, action) => {
     }
 
     case "SET_ME": {
+      return {
+        ...state,
+        me: action.payload,
+      };
+    }
+    case "SET_PAGINATION": {
       return {
         ...state,
         me: action.payload,
